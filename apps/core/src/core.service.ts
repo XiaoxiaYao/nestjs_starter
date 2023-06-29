@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCoreDto } from './dto/create-core.dto';
 import { UpdateCoreDto } from './dto/update-core.dto';
+import { CoreRepository } from './core.repository';
 
 @Injectable()
 export class CoreService {
-  create(createCoreDto: CreateCoreDto) {
-    return 'This action adds a new core';
+  constructor(private readonly coreRepository: CoreRepository) {}
+  async create(createCoreDto: CreateCoreDto) {
+    return this.coreRepository.create({
+      ...createCoreDto,
+      userId: '123',
+      created_at: new Date(),
+    });
   }
 
-  findAll() {
-    return `This action returns all core`;
+  async findAll() {
+    return this.coreRepository.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} core`;
+  async findOne(_id: string) {
+    return this.coreRepository.findOne({ _id });
   }
 
-  update(id: number, updateCoreDto: UpdateCoreDto) {
-    return `This action updates a #${id} core`;
+  async update(_id: string, updateCoreDto: UpdateCoreDto) {
+    return this.coreRepository.findOneAndUpdate(
+      { _id },
+      { $set: updateCoreDto },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} core`;
+  async remove(_id: string) {
+    return this.coreRepository.findOneAndDelete({ _id });
   }
 }

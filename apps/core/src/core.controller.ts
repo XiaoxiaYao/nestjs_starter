@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CoreService } from './core.service';
 import { CreateCoreDto } from './dto/create-core.dto';
 import { UpdateCoreDto } from './dto/update-core.dto';
@@ -19,16 +27,16 @@ export class CoreController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.coreService.findOne(+id);
+    return this.coreService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCoreDto: UpdateCoreDto) {
-    return this.coreService.update(+id, updateCoreDto);
+    return this.coreService.update(id, updateCoreDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.coreService.remove(+id);
+    return this.coreService.remove(id);
   }
 }
